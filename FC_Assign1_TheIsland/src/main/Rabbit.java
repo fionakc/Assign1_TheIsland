@@ -10,6 +10,7 @@ public class Rabbit implements Animal{
 	private  int Ypos;
 	private  int energy;
 	private  int speed;
+	//private boolean hungry;
 	
 	//constructor with specified positions
 	public Rabbit(int x, int y) {		
@@ -17,6 +18,7 @@ public class Rabbit implements Animal{
 		this.Ypos = y;
 		this.energy = (int)((Math.random()*20)+1);		
 		this.speed=1;	
+		
 	}
 	
 	
@@ -79,12 +81,16 @@ public class Rabbit implements Animal{
 	} //end loseEnergy
 	
 	public void gainEnergy() {
-		
+		this.energy++;
 	}
 	
-//	public boolean checkAdjacent() {
-//		return false;
-//	}
+	public boolean isHungry() {
+		boolean hungry=false;
+		if(this.energy<4) {
+			hungry=true;
+		}
+		return hungry;
+	} //end isHungry
 	
 	
 } //end class

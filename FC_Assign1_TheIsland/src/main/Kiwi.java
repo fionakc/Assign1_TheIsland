@@ -78,8 +78,12 @@ public class Kiwi implements Animal{
 			this.energy++;
 		}
 		
-	//	public boolean checkAdjacent() {
-	//		return false;
-	//	}
+		public boolean isHungry() {
+			boolean hungry=false;
+			if(this.energy<4) {
+				hungry=true;
+			}
+			return hungry;
+		} //end isHungry
 	
 }

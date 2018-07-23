@@ -16,7 +16,7 @@ public interface Animal {
 	public void moveRandom();
 	public void loseEnergy();
 	public void gainEnergy();
-//	public boolean checkAdjacent();
+	public boolean isHungry();
 	
 	
 } //end interface

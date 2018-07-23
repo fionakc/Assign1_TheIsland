@@ -48,5 +48,18 @@ public class Grass {
 			return this.age;
 		}
 		
+		public void eaten() {
+			System.out.println("eaten");
+			//System.out.println(this.age+" "+this.symbol);
+			if(this.age>0) {
+				this.age--;
+			}
+			//System.out.println(this.age+" "+this.symbol);
+			
+			setSymbol(this.age);
+			
+			//System.out.println(this.age+" "+this.symbol);
+		}
+		
 	
 } //end class
