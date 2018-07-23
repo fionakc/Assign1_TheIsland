@@ -1,20 +1,25 @@
 package main;
 
+//Fiona Crook
+//300442873
+//Swen501 - Assignment 1: The Island
+
 public class Grass {
 
-	//variables
+	
 		private int Xpos;
 		private int Ypos;
-		private int age;
+		private int age; //used as analogy for energy contained also
 		private String symbol;
 		
-		public Grass(int x, int y) { //constructor
+		public Grass(int x, int y) { 
 			this.Xpos=x;
 			this.Ypos=y;
 			this.age=(int)(Math.random()*(3)+1);
 			this.symbol=String.valueOf(this.age);
-		} //end constructor
+		} 
 		
+		//increases plant age up to value of 9
 		public void ageUp() {			
 			if(this.age<9) {		
 				this.age++;
@@ -26,6 +31,7 @@ public class Grass {
 			return this.symbol;
 		}
 		
+		//uses plant age as plant symbol
 		public void setSymbol(int age) {
 			this.symbol=String.valueOf(age);
 		}
@@ -49,17 +55,11 @@ public class Grass {
 		}
 		
 		public void eaten() {
-			System.out.println("eaten");
-			//System.out.println(this.age+" "+this.symbol);
+			//can only eat plant if it still has age/energy
 			if(this.age>0) {
 				this.age--;
-			}
-			//System.out.println(this.age+" "+this.symbol);
-			
+			}			
 			setSymbol(this.age);
-			
-			//System.out.println(this.age+" "+this.symbol);
 		}
-		
-	
-} //end class
+			
+} 

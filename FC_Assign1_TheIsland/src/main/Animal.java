@@ -1,5 +1,9 @@
 package main;
 
+//Fiona Crook
+//300442873
+//Swen501 - Assignment 1: The Island
+
 public interface Animal {
 
 	public int getXpos();

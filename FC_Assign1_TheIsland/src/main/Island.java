@@ -1,10 +1,14 @@
 package main;
 
+//Fiona Crook
+//300442873
+//Swen501 - Assignment 1: The Island
+
 import java.util.ArrayList;
 
 public class Island {
 	
-	//variables - make these changeable
+	
 	private int worldHeighty;
 	private int worldWidthx;
 	private String [][] field;
@@ -19,7 +23,7 @@ public class Island {
 	private int grassDirX;
 	private int grassDirY;
 	
-	//constructor
+	
 	public Island(int heightY, int widthX, int rabbitNum, int kiwiNum) {
 		
 		this.worldHeighty=heightY;
@@ -27,127 +31,116 @@ public class Island {
 		this.numberOfRabbits=rabbitNum;
 		this.numberOfKiwi=kiwiNum;
 		field = new String [this.worldHeighty][this.worldWidthx];
-			//initialising the field array to empty spaces
-			for(int y=0;y<this.worldHeighty;y++) {
-				for(int x=0;x<this.worldWidthx;x++) {
-					this.field[y][x]=".";
-				} //end x loop			
-			} //end y loop			
-			
-		} //end constructor
 		
-		//===========================================
+		//initialising the field array to empty spaces
+		for(int y=0;y<this.worldHeighty;y++) {
+			for(int x=0;x<this.worldWidthx;x++) {
+				this.field[y][x]=".";
+			} 			
+		} 			
+			
+	} 
+		
+		
 	public void populateIsland() {
 			
-		boolean grassAdded=false;
-		
+		//adding grass to the island
+		boolean grassAdded=false;		
 		for(int i=0;i<this.numberOfGrass;i++) {
 			grassAdded=false;
 			while(!grassAdded) {
-				int Xpos = (int)(Math.random()*(this.worldWidthx)); //create new plant position values
+				int Xpos = (int)(Math.random()*(this.worldWidthx)); //create new grass position values
 				int Ypos = (int)(Math.random()*(this.worldHeighty));
 				boolean checkCollide=detectCollideAll(Xpos,Ypos);
 				if(!checkCollide) {
 					Grass grassTemp = new Grass (Xpos,Ypos);
 					this.grassList.add(grassTemp);
-				//	System.out.println("Grass at "+Xpos+" "+Ypos);
 					grassAdded=true;
-				} //end if notcheckCollide
-				//if collides, will circle back up and generate new xpos, ypos
-				
-			} //end while not animalDone
-			
-		} //end for grassList
+				} 
+			}			
+		}
 		
-			boolean rabbitAdded=false;
-			
-			for(int i=0;i<this.numberOfRabbits;i++) {
-				rabbitAdded=false;
-				while(!rabbitAdded) {
-					int Xpos = (int)(Math.random()*(this.worldWidthx)); //create new animal position values
-					int Ypos = (int)(Math.random()*(this.worldHeighty));
-					boolean checkCollide=detectCollideAll(Xpos,Ypos);
-					if(!checkCollide) {
-						Rabbit rabbitTemp = new Rabbit (Xpos,Ypos);
-						this.animalList.add(rabbitTemp);
-					//	System.out.println("Rabbit at "+Xpos+" "+Ypos);
-						rabbitAdded=true;
-					} //end if notcheckCollide
-					//if collides, will circle back up and generate new xpos, ypos					
-				} //end while not rabbitAdded				
-			} //end for numberOfRabbits
-			
-			boolean kiwiAdded=false;
-			
-			for(int i=0;i<this.numberOfKiwi;i++) {
-				kiwiAdded=false;
-				while(!kiwiAdded) {
-					int Xpos = (int)(Math.random()*(this.worldWidthx)); //create new animal position values
-					int Ypos = (int)(Math.random()*(this.worldHeighty));
-					boolean checkCollide=detectCollideAll(Xpos,Ypos);
-					if(!checkCollide) {
-						Kiwi kiwiTemp = new Kiwi (Xpos,Ypos);
-						this.animalList.add(kiwiTemp);
-					//	System.out.println("Kiwi at "+Xpos+" "+Ypos);
-						kiwiAdded=true;
-					} //end if notcheckCollide
-					//if collides, will circle back up and generate new xpos, ypos					
-				} //end while not kiwiAdded				
-			} //end for numberOfKiwi
+		//adding rabbits to the island
+		boolean rabbitAdded=false;		
+		for(int i=0;i<this.numberOfRabbits;i++) {
+			rabbitAdded=false;
+			while(!rabbitAdded) {
+				int Xpos = (int)(Math.random()*(this.worldWidthx)); //create new animal position values
+				int Ypos = (int)(Math.random()*(this.worldHeighty));
+				boolean checkCollide=detectCollideAll(Xpos,Ypos);
+				if(!checkCollide) {
+					Rabbit rabbitTemp = new Rabbit (Xpos,Ypos);
+					this.animalList.add(rabbitTemp);
+					rabbitAdded=true;
+				} 				
+			} 				
+		} 
 		
-			
-	} //end populate
+		//adding kiwi to the island
+		boolean kiwiAdded=false;		
+		for(int i=0;i<this.numberOfKiwi;i++) {
+			kiwiAdded=false;
+			while(!kiwiAdded) {
+				int Xpos = (int)(Math.random()*(this.worldWidthx)); //create new animal position values
+				int Ypos = (int)(Math.random()*(this.worldHeighty));
+				boolean checkCollide=detectCollideAll(Xpos,Ypos);
+				if(!checkCollide) {
+					Kiwi kiwiTemp = new Kiwi (Xpos,Ypos);
+					this.animalList.add(kiwiTemp);
+					kiwiAdded=true;
+				} 					
+			} 				
+		} 
+					
+	} 
 	
 	
-		//======================================
+
 	public void drawIsland() {
 			
-			//empty out array
-			for(int y=0;y<this.worldHeighty;y++) {
-				for(int x=0;x<this.worldWidthx;x++) {
-					this.field[y][x]=".";				
-				} //end x loop			
-			} //end y loop	
+		//empty out array
+		for(int y=0;y<this.worldHeighty;y++) {
+			for(int x=0;x<this.worldWidthx;x++) {
+				this.field[y][x]=".";				
+			} 			
+		} 	
+		
+		
+		//add in grass to island array - assume no collisions		
+		for (int i=0;i<this.grassList.size();i++) {					
+			int xValue=this.grassList.get(i).getXpos(); 				
+			int yValue=this.grassList.get(i).getYpos();				
+			String symbol = this.grassList.get(i).getSymbol();				
+			this.field[yValue][xValue]=symbol;						
+		} 
+		
+		
+		//add in animals to island array - assume no collisions			
+		for (int i=0;i<this.animalList.size();i++) {					
+			int xValue=this.animalList.get(i).getXpos(); 				
+			int yValue=this.animalList.get(i).getYpos();				
+			String symbol = this.animalList.get(i).getSymbol();				
+			this.field[yValue][xValue]=symbol;							
+		} 
+		
+		//draw out island array to screen
+		for(int y=0;y<this.worldHeighty;y++) {
+			for(int x=0;x<this.worldWidthx;x++) {
+				System.out.print(this.field[y][x]);				
+			} 
+			System.out.println();
+		} 	
 			
-			//add in grass to array - assume no collisions
-			
-			for (int i=0;i<this.grassList.size();i++) {					
-				int xValue=this.grassList.get(i).getXpos(); //extract values				
-				int yValue=this.grassList.get(i).getYpos();				
-				String symbol = this.grassList.get(i).getSymbol();
-				//System.out.println(symbol);				
-				this.field[yValue][xValue]=symbol;
-							
-			} //end draw grass for loop
-			
-			
-			//add in animals to array - assume no collisions			
-			for (int i=0;i<this.animalList.size();i++) {					
-				int xValue=this.animalList.get(i).getXpos(); //extract values				
-				int yValue=this.animalList.get(i).getYpos();				
-				String symbol = this.animalList.get(i).getSymbol();				
-				this.field[yValue][xValue]=symbol;							
-			} //end draw animal for loop
-			
-			//draw out array
-			for(int y=0;y<this.worldHeighty;y++) {
-				for(int x=0;x<this.worldWidthx;x++) {
-					System.out.print(this.field[y][x]);
-					
-				} //end x loop
-				System.out.println();
-			} //end y loop		
-				
-			
-		} //end drawIsland
+		
+	} 
 	
-		//===========================================
+		
 	public void updateIsland() {
 		
 		//grass grows
 		for(int i=0;i<this.grassList.size();i++) {
 			this.grassList.get(i).ageUp();			
-		} //end age grass
+		} 
 		
 		//animals move
 		this.numberRabbitsAlive=0;
@@ -155,15 +148,19 @@ public class Island {
 			int tryTimes=0;	
 			//if animal is still alive (has positive energy)
 			if(this.animalList.get(j).getEnergy()>0) {
-				boolean hungry=this.animalList.get(j).isHungry();
+				
+				//searching for food is not currently set up, but here is where it would be
+				//if animal is not hungry, randomly search for food
+				//if animal is hungry, check which direction food is in and move that way
+				
+				//boolean hungry=this.animalList.get(j).isHungry();
 				//if not hungry, move randomly
-				if(!hungry) {
+				//if(!hungry) {
 					int xTempStart=this.animalList.get(j).getXpos();
 					int yTempStart=this.animalList.get(j).getYpos();
 					int xTempStop=xTempStart;
 					int yTempStop=yTempStart;
-					Rabbit rabbitTemp=new Rabbit(xTempStart,yTempStart);
-				
+					Rabbit rabbitTemp=new Rabbit(xTempStart,yTempStart);				
 					boolean doesCollide=true;
 				
 					while(doesCollide) {	
@@ -175,7 +172,7 @@ public class Island {
 						if(doesCollide) { //if does, reset rabbitTemp to rabbitList values					
 							rabbitTemp.setXpos(xTempStart);
 							rabbitTemp.setYpos(yTempStart);				
-						} //end if doesCollide
+						} 
 						else { //if !doesCollide, will exit the while loop
 							xTempStop=rabbitTemp.getXpos();
 							yTempStop=rabbitTemp.getYpos();
@@ -187,33 +184,32 @@ public class Island {
 							yTempStop=yTempStart;
 							break;
 						}
-					} //end while doesCollide			
+					} 			
 					//it now shouldn't collide with anything			
 					this.animalList.get(j).setXpos(xTempStop);
 					this.animalList.get(j).setYpos(yTempStop);
 					this.animalList.get(j).loseEnergy();			
 					if(this.animalList.get(j).getSymbol().equals("R")) {
 						this.numberRabbitsAlive++;		
-					} //end if
-				} //end if animal not hungry
+					} 
+				//} //end if animal not hungry
 				
 				//what to do if animal is hungry
-				else {
+				//else {
 					
 					
 					
-				}
+				//}
 				
-			} //end if animal has energy
+			} 
 				
-				//if animal has not energy, mark as dead
+				//if animal has 0 energy, mark as dead
 			else {
 				this.animalList.get(j).setSymbol("X");
-			} //end else
+			} 
 				
-		} //end animal move for loop
+		} 
 		
-		//-------------------------------
 		
 		//check if animals eat anything
 		for(int k=0;k<this.animalList.size();k++) {
@@ -221,162 +217,151 @@ public class Island {
 			//kiwi eat wherever they are
 			if(sym.equals("K")) {
 				this.animalList.get(k).gainEnergy();
-			//	System.out.println("kiwi eats");
+
 			} 
 			//rabbits eat if adjacent to plants
 			else if(sym.equals("R")) {
-			//	System.out.println("detect if rabbit");
 				boolean nextToPlant=checkAdjacent(this.animalList.get(k).getXpos(),this.animalList.get(k).getYpos());
-				//System.out.println(nextToPlant);
 				if(nextToPlant) {
 					this.animalList.get(k).gainEnergy();
-				//	System.out.println("rabbit eats");
 					for(int m=0;m<this.grassList.size();m++) {
 						if(this.grassList.get(m).getXpos()==grassAdjX && this.grassList.get(m).getYpos()==grassAdjY) {
 							this.grassList.get(m).eaten();
-						//	System.out.println("plant is eaten");
 							break;
-						} //end if this grass
-					} //end for every grass
-				} //end if nextToPlant
-			} //end else if
+						} 
+					} 
+				} 
+			} 
 			
-		} //end for animalList
+		} 
 		
 		
 
-	} //end updateIsland
+	} 
 		
-		//===========================================
-		private boolean detectCollideAll(int x, int y) {
-			int xVal = x;
-			int yVal = y;
+		
+	private boolean detectCollideAll(int x, int y) {
+		int xVal = x;
+		int yVal = y;
 
-			boolean	collides=false;
-				
-			//check stays within boundaries
-			//check if collides with walls
-			if(!collides) {
+		boolean	collides=false;
 			
-				//collides with sides
-				if(xVal<0 || xVal>=this.worldWidthx) {
+		//check stays within boundaries
+		if(!collides) {
+		
+			//collides with sides
+			if(xVal<0 || xVal>=this.worldWidthx) {
+				collides=true;
+			}
+			//collides with top and bottom
+			if(yVal<0 || yVal>=this.worldHeighty) {
+				collides=true;
+			}	
+			
+		} 
+		
+		//check if collides with grass
+		if(!collides) {					
+			for (int i=0;i<this.grassList.size();i++) {						
+				if(xVal==this.grassList.get(i).getXpos() && yVal==this.grassList.get(i).getYpos()) {
 					collides=true;
-					//break;
-				}
-				//collides with top and bottom
-				if(yVal<0 || yVal>=this.worldHeighty) {
-					collides=true;
-					//break;
-				}	
-				
-			} //end if !collides walls
-			
-				//check if collides with grass
-				if(!collides) {					
-					for (int i=0;i<this.grassList.size();i++) {						
-						if(xVal==this.grassList.get(i).getXpos() && yVal==this.grassList.get(i).getYpos()) {
-							collides=true;
-							break;
-						} //end if check
-					} //end for grassList					
-				} //end if !collides grass
-				
-				//check if collides with animals
-				if(!collides) {					
-					for (int i=0;i<this.animalList.size();i++) {												
-						if(xVal==this.animalList.get(i).getXpos() && yVal==this.animalList.get(i).getYpos()) {					
-							collides=true;				
-							break;
-						} //end if check						
-					} //end for animalList				
-				} //end if !collides animals				
-
-		return collides;
-			
-		} //end detectCollideAll
-		
-		//===========================================
-		public int stillAlive() {
-		//	int alive=0;
-		//	for(int a=0;a<this.animalList.size();a++) {
-		//		if(this.animalList.get(a).getEnergy() >0) {
-		//			alive++;
-		//		} //end if
-		//	} //end for loop
-			
-		//	return alive;
-			return this.numberRabbitsAlive;
-		} //end stillAlive
-		
-		//===========================================
-		public boolean checkAdjacent(int x, int y) {
-			int xVal = x;
-			int yVal = y;			
-			boolean adjacent=false;
-			
-			for(int i=0;i<this.grassList.size();i++) {
-				int grassX=this.grassList.get(i).getXpos();
-				int grassY=this.grassList.get(i).getYpos();
-				if((yVal==grassY && Math.abs(xVal-grassX)==1) || (xVal==grassX && Math.abs(yVal-grassY)==1)) {
-					adjacent=true;
-					this.grassAdjX=grassX;
-					this.grassAdjY=grassY;
 					break;
-				} //end if
-			} //end for grassList
-
-			return adjacent;
-		} //end checkAdjacent
+				} 
+			} 				
+		} 
 		
-		//===========================================
-		public boolean checkForFood(int x, int y) {
-			int xVal=x;
-			int yVal=y;
-			int grassX=0;
-			int grassY=0;
-			this.grassDirX=0;
-			this.grassDirY=0;
-			boolean food=false;
-			for(int i=yVal-2;i<=yVal+2;i++) {
-				for(int j=xVal-2;j<=xVal+2;j++) {
+		//check if collides with animals
+		if(!collides) {					
+			for (int i=0;i<this.animalList.size();i++) {												
+				if(xVal==this.animalList.get(i).getXpos() && yVal==this.animalList.get(i).getYpos()) {					
+					collides=true;				
+					break;
+				} 						
+			} 			
+		} 				
+
+	return collides;
+		
+	} 
+		
+		
+	public int stillAlive() {	
+		return this.numberRabbitsAlive;
+	} 
+		
+		
+	public boolean checkAdjacent(int x, int y) {
+		int xVal = x;
+		int yVal = y;			
+		boolean adjacent=false;
+		
+		//check if object is next to a grass object
+		for(int i=0;i<this.grassList.size();i++) {
+			int grassX=this.grassList.get(i).getXpos();
+			int grassY=this.grassList.get(i).getYpos();
+			if((yVal==grassY && Math.abs(xVal-grassX)==1) || (xVal==grassX && Math.abs(yVal-grassY)==1)) {
+				adjacent=true;
+				this.grassAdjX=grassX;
+				this.grassAdjY=grassY;
+				break;
+			} 
+		} 
+
+		return adjacent;
+	} 
+		
+	//this method is not finalised, and so is not used yet
+	//it can search for food
+	//but I haven't yet got the rabbit movement direction towards food working
+	public boolean checkForFood(int x, int y) {
+		int xVal=x;
+		int yVal=y;
+		int grassX=0;
+		int grassY=0;
+		this.grassDirX=0;
+		this.grassDirY=0;
+		boolean food=false;
+		for(int i=yVal-2;i<=yVal+2;i++) {
+			for(int j=xVal-2;j<=xVal+2;j++) {
+				
+				for(int k=0;k<grassList.size();k++) {
+					grassX=this.grassList.get(i).getXpos();
+					grassY=this.grassList.get(i).getYpos();
 					
-					for(int k=0;k<grassList.size();k++) {
-						grassX=this.grassList.get(i).getXpos();
-						grassY=this.grassList.get(i).getYpos();
-						
-						if(xVal==grassX && yVal==grassY) {
-							food=true;
-							break;
-						} //end if grass
-						
-					} //end grassList loop
-					if(food) {
+					if(xVal==grassX && yVal==grassY) {
+						food=true;
 						break;
-					}
-				} //end x loop	
+					} 
+					
+				} 
 				if(food) {
 					break;
 				}
-			} //end y loop	
+			} 
 			
-			//setting search direction
-			
-			if(xVal-grassX>0) {
-				this.grassDirX=-1;
+			if(food) {
+				break;
 			}
-			else if(xVal-grassX<0) {
-				this.grassDirX=1;
-			}
-			else if(yVal-grassY>0) {
-				this.grassDirY=-1;
-			}
-			else if(yVal-grassY<0) {
-				this.grassDirY=1;
-			}
-			
-			return food;
-		} //end checkForFood
+		} 	
 		
-		//===========================================
+		//setting search direction
 		
-} //end class
+		if(xVal-grassX>0) {
+			this.grassDirX=-1;
+		}
+		else if(xVal-grassX<0) {
+			this.grassDirX=1;
+		}
+		else if(yVal-grassY>0) {
+			this.grassDirY=-1;
+		}
+		else if(yVal-grassY<0) {
+			this.grassDirY=1;
+		}
+		
+		return food;
+	} 
+		
+		
+		
+} 
